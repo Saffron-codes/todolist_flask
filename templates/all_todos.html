@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos | {{name}}</title>
+    <link rel="stylesheet" href="../static/styles.css" />
+</head>
+
+<body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <h2>{{name}}</h2>
+    <h3>{{email}}</h3>
+    <a href="{{url_for('logout')}}">Logout</a>
+    <div class="center">
+        <h1>Todo List</h1>
+        <form method="post"  action="{{ url_for('create') }}">
+            <input name="content" placeholder="Type a new Todo" value="{{ request.form['title'] }}" />
+            <input type="submit" value="Add Todo"/>
+        </form>
+        <div class="todos">
+            <ul>
+                {% for todo in todos %}
+                <div class="todo">
+                    <h4>{{todo.content}}</h4>
+                    <form method="delete" action="{{ url_for('delete',id=todo.id) }}">
+                        <input type="submit" value="remove"/>
+                    </form>
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

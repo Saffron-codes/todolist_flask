@@ -1,0 +1,54 @@
+ul {
+    padding: 10px;
+    max-height:100px;
+    /* overflow: clip; */
+}
+
+.todos{
+    height:35vh;
+    overflow: scroll;
+}
+
+/* h4 {
+    background-color: #F2F2F2;
+    padding: 10px;
+    border-radius: 10px;
+    /* height: 40px; 
+} */
+
+.todo{
+    height: 20px;
+    background-color: #F2F2F2;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    background-image: linear-gradient(#62D7D0, #4B85E5);
+    overflow: hidden;
+}
+
+.center {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 360px;
+    height: 50vh;
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos | Signup</title>
+    <link rel="stylesheet" href="../static/form.css" />
+</head>
+<body>
+    <h3 class="welcome">
+        Hey 👋 Welcome to the todo list app created by <a href="https://github.com/saffron-codes" target="_blank">@saffron-codes</a>
+    </h3>
+    <div class="center">
+        <div class="login-form">
+            <h1>Signup</h1>
+            <form method="post" action="{{ url_for('signup') }}">
+                <div class="content">
+                    <input placeholder="Enter your Name" name="name" type="name" required/>
+                    <input placeholder="Enter email" name="email" type="email" id="email" required/>
+                    <input placeholder="Password" name="password" type="password" id="password" required/>
+                </div>
+                <p id="loading" style="display: none;">Loading....</p>
+                <p>Have a account ? <a href="{{url_for('login')}}">Login</a></p>
+                <input type="submit" value="Signup" class="btn" onclick="setLoading()"/>
+            </form>
+        </div>
+    </div>
+    <script>
+        const setLoading=()=>{
+            document.getElementById("loading").style = "display:block"
+        }
+    </script>
+</body>
+</html>
