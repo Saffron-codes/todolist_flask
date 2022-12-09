@@ -7,9 +7,9 @@ from dotenv import dotenv_values
 import os
 
 config = dotenv_values()
-print(os.environ)
+print(config['ENV'])
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = config['DB_URL']if "PROD" == config['ENV'] else 'sqlite:///db.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = config['DB_URL']if config['ENV'] == "PROD" else 'sqlite:///db.sqlite3'
 
 app.config['SECRET_KEY'] = 'todo_list'
 app.permanent_session_lifetime = timedelta(days=100)
