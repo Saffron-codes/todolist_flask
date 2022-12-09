@@ -7,7 +7,7 @@ from dotenv import dotenv_values
 import os
 
 config = dotenv_values()
-print(config['ENV'])
+print(config)
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = config['DB_URL']if config['ENV'] == "PROD" else 'sqlite:///db.sqlite3'
 
