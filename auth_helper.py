@@ -6,14 +6,15 @@ class AuthHelper:
         print('Hello')
     def signup(self,name:str,email:str,password:str)->str:
         # hasedPassword = bcrypt.kdf(password=password.encode(),salt=b'hello',desired_key_bytes=32,rounds=100)
-        salt = bcrypt.gensalt(rounds=16)
+        salt = bcrypt.gensalt(rounds=12)
         hasedPassword = bcrypt.hashpw(password.encode(),salt)
-        # print(hasedPassword)
-        user = User(name=name,email=email,password=hasedPassword)
+        print(hasedPassword.decode())
+        print(b'12')
+        user = User(name=name,email=email,password=hasedPassword.decode())
         db.session.add(user)
         db.session.commit()
         db.session.refresh(user)
-        print("******************",user.id)
+        # print("******************",user.id)
         payload = {
             'id':user.id,
             'name':user.name,
@@ -25,15 +26,18 @@ class AuthHelper:
         return token
     def login(self,email:str,password:str)->str:
         user:User = User.query.filter_by(email=email).first()
-        print(user.password)
+        encoded_password = password.encode()
+        hashed_password = str(user.password).encode()
+        # print(str(user.password).encode())
+        # print(password.encode())
         if(user):
-            if bcrypt.checkpw(password.encode(),user.password):
+            if bcrypt.checkpw(password=encoded_password,hashed_password=hashed_password):
                 print("match")
                 payload = {
                     'id':user.id,
                     'name':user.name,
                     'email':user.email,
-                    'password':user.password.decode("utf-8")
+                    'password':str(user.password)
                 }
                 secrect_key = '123ef'
                 token = jwt.encode(payload=payload,key=secrect_key)

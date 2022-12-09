@@ -19,7 +19,10 @@
     {% endwith %}
     <h2>{{name}}</h2>
     <h3>{{email}}</h3>
-    <a href="{{url_for('logout')}}">Logout</a>
+    <a href="{{url_for('logout')}}">
+       <input type="submit" value="Logout" class="btn"  onclick="setLoading()"/>
+    </a>
+
     <div class="center">
         <h1>Todo List</h1>
         <form method="post"  action="{{ url_for('create') }}">

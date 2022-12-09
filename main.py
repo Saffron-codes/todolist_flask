@@ -3,9 +3,14 @@ from flask import Flask,render_template,request,flash,url_for,redirect,session
 from flask_sqlalchemy import SQLAlchemy
 from models import db,Todo,User
 from auth_helper import AuthHelper
+from dotenv import dotenv_values
+
+
+config = dotenv_values(".env")
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = config['DB_URL']if "PROD" == config['ENV'] else 'sqlite:///db.sqlite3'
+
 app.config['SECRET_KEY'] = 'todo_list'
 app.permanent_session_lifetime = timedelta(days=100)
 db.init_app(app)
@@ -41,7 +46,7 @@ def create():
         db.session.add(todo)
         db.session.commit()
     else:
-        flash("Enter Properly")
+        flash("Type something to add")
     return redirect(url_for('home'))
 
 
