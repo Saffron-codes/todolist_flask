@@ -3,13 +3,16 @@ from flask import Flask,render_template,request,flash,url_for,redirect,session
 from flask_sqlalchemy import SQLAlchemy
 from models import db,Todo,User
 from auth_helper import AuthHelper
-from dotenv import dotenv_values
+from dotenv import load_dotenv
 import os
 
-config = dotenv_values()
-print(config)
+BASEDIR = os.path.abspath(os.path.dirname(__file__))
+load_dotenv(os.path.join(BASEDIR, '.env'))
+
+isProduction = True
+print(os.getenv("ENV"))
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = config['DB_URL']if config['ENV'] == "PROD" else 'sqlite:///db.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DB_URL") if os.getenv("ENV")=="PROD" else 'sqlite:///db.sqlite3'
 
 app.config['SECRET_KEY'] = 'todo_list'
 app.permanent_session_lifetime = timedelta(days=100)
