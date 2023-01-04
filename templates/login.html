@@ -10,36 +10,32 @@
 </head>
 
 <body>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
     <div class="center">
         <div class="login-form">
             <h1>Login</h1>
             <form method="post" action="{{ url_for('login') }}">
                 <div class="content">
-                    <input placeholder="Enter email" name="email" type="email" id="email" required/>
-                    <input placeholder="Password" name="password" type="password" id="password" required/>
+                    <input placeholder="Enter email" name="email" type="email" id="email" required />
+                    <input placeholder="Password" name="password" type="password" id="password" required />
                 </div>
-                
-                {% if error !=None %}
-                    <p id="error">check your email & password</p>
-                {% else %}
-                    <p id="loading" style="display: none;">Loading....</p>
-                {% endif %}
+                <div id="error">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p style="font-size: 0.8em; color: red;">{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
                 <p id="loading" style="display: none;">Loading....</p>
                 <p>Don't have a account ? <a href="{{url_for('signup')}}">Signup</a></p>
-                <input type="submit" value="Login" class="btn"  onclick="setLoading()"/>
+                <input type="submit" value="Login" class="btn" onclick="setLoading()" />
 
             </form>
         </div>
     </div>
     <script>
-        const setLoading=()=>{
+        const setLoading = () => {
             document.getElementById("loading").style = "display:block"
             document.getElementById("error").style = "display:none"
         }

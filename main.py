@@ -65,6 +65,7 @@ def login():
     if request.method == "POST":
         session.permanent = True
         response = authHelper.login(request.form['email'],request.form['password'])
+        print(response)
         if response != 'error':
             session['jwt'] = response
             user = authHelper.decodeJwt(session['jwt'])
@@ -72,7 +73,8 @@ def login():
             return redirect(url_for('home',name=user['name'],email=user['email']))
         else:
             print("An error occured check your password")
-            return redirect(url_for("login",error="Check your email and password"))
+            flash('Check your email and password')
+            # return redirect(url_for("login",error="Check your email and password"))
     else:
         if 'jwt' in session:
             user = authHelper.decodeJwt(session['jwt'])
@@ -83,14 +85,13 @@ def login():
 def signup():
     if request.method == "POST":
         #user = User(name=request.form['name'],email=request.form['email'])
-        jwt = authHelper.signup(name=request.form['name'],email=request.form['email'],password=request.form['password'])
-        if jwt:
-            session['jwt'] = jwt
+        response = authHelper.signup(name=request.form['name'],email=request.form['email'],password=request.form['password'])
+        if response !='error':
+            session['jwt'] = response
             user = authHelper.decodeJwt(session['jwt'])
-            # print(user)
             return redirect(url_for('home',name=user['name'],email=user['email']))
         else:
-            print("Sign up Error")
+            flash('User Already Exists')
     else:
         if 'jwt' in session:
             user = authHelper.decodeJwt(session['jwt'])

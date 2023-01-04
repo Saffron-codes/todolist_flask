@@ -5,25 +5,27 @@ class AuthHelper:
     def hello():
         print('Hello')
     def signup(self,name:str,email:str,password:str)->str:
-        # hasedPassword = bcrypt.kdf(password=password.encode(),salt=b'hello',desired_key_bytes=32,rounds=100)
-        salt = bcrypt.gensalt(rounds=12)
-        hasedPassword = bcrypt.hashpw(password.encode(),salt)
-        print(hasedPassword.decode())
-        print(b'12')
-        user = User(name=name,email=email,password=hasedPassword.decode())
-        db.session.add(user)
-        db.session.commit()
-        db.session.refresh(user)
-        # print("******************",user.id)
-        payload = {
-            'id':user.id,
-            'name':user.name,
-            'email':user.email,
-            'password':hasedPassword.decode("utf-8")
-        }
-        secrect_key = '123ef'
-        token = jwt.encode(payload=payload,key=secrect_key)
-        return token
+        user:User = User.query.filter_by(email=email).first()
+        if(user == None):
+            salt = bcrypt.gensalt(rounds=12)
+            hasedPassword = bcrypt.hashpw(password.encode(),salt)
+            print(hasedPassword.decode())
+            user = User(name=name,email=email,password=hasedPassword.decode())
+            db.session.add(user)
+            db.session.commit()
+            db.session.refresh(user)
+            # print("******************",user.id)
+            payload = {
+                'id':user.id,
+                'name':user.name,
+                'email':user.email,
+                'password':hasedPassword.decode("utf-8")
+            }
+            secrect_key = '123ef'
+            token = jwt.encode(payload=payload,key=secrect_key)
+            return token
+        else:
+            return 'error'
     def login(self,email:str,password:str)->str:
         user:User = User.query.filter_by(email=email).first()
         encoded_password = password.encode()

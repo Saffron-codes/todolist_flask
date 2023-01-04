@@ -20,6 +20,15 @@
                     <input placeholder="Enter email" name="email" type="email" id="email" required/>
                     <input placeholder="Password" name="password" type="password" id="password" required/>
                 </div>
+                <div id="error">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p style="font-size: 0.8em; color: red;">{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
                 <p id="loading" style="display: none;">Loading....</p>
                 <p>Have a account ? <a href="{{url_for('login')}}">Login</a></p>
                 <input type="submit" value="Signup" class="btn" onclick="setLoading()"/>
@@ -27,11 +36,10 @@
         </div>
     </div>
     <script>
-        const setLoading=()=>{
+        const setLoading = () => {
             document.getElementById("loading").style = "display:block"
+            document.getElementById("error").style = "display:none"
         }
-        document.cookie = "SameSite=None; Secure";
-        console.log(document.cookie);
     </script>
 </body>
 </html>
