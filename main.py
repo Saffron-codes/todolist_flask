@@ -102,4 +102,4 @@ def logout():
     session.pop('jwt',None)
     return render_template("login.html",error=None)
 if __name__ == '__main__':
-    app.run(host='0.0.0.0') if os.getenv("ENV")=="PROD" else app.run(debug=True)
+    app.run(host='0.0.0.0',port=os.getenv("PORT", default=5000)) if os.getenv("ENV")=="PROD" else app.run(debug=True)
