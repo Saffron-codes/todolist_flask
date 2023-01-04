@@ -51,7 +51,7 @@ class AuthHelper:
         return jwt.decode(token,key='123ef',algorithms='HS256')
     def getAllTodos(self,userId:int):
         t = Todo.query.filter_by(user_id=userId).order_by(Todo.createdAt.desc())
-        for s in t:
-            print(s.content)
+        # for s in t:
+        #     print(s.content)
         return t
     
